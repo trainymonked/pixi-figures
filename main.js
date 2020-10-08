@@ -8,6 +8,20 @@ const app = new PIXI.Application({
   backgroundColor: 0xeeddaa
 });
 
+(() => {
+  const dvW = window.innerWidth - 20, dvH = window.innerHeight - 20;
+  let scrW = dvW, scrH = dvH;
+  if (dvW >= app.view.width && dvH >= app.view.height) {
+    return;
+  }
+  if (dvH/dvW < app.view.height/app.view.width) {
+    scrW = (scrH*app.view.width)/app.view.height;
+  } else {
+    scrH = (scrW*app.view.height)/app.view.width;
+  }
+  app.renderer.resize(scrW, scrH);
+})();
+
 document.getElementById('figures').appendChild(app.view);
 
 const { width, height } = app.view, rad = height / 10;
@@ -21,8 +35,10 @@ const targetTrianglePath = [
 let figuresAmount = 0;
 
 Loader.load(() => {
-  createTargets();
-  createRandomFigures();
+  const container = new PIXI.Container();
+  createTargets(container);
+  createRandomFigures(container);
+  app.stage.addChild(container);
 
   const border = new PIXI.Graphics();
   border.lineStyle(2, 0x000000);
@@ -108,7 +124,7 @@ function gameOver() {
   app.stage.addChild(text);
 }
 
-function createRandomFigures() {
+function createRandomFigures(container) {
   const figures = [];
   for (let i = 0, max = getRandom(4, 10); i < max; i++) {
     const figureType = getRandom(0, 2);
@@ -130,18 +146,18 @@ function createRandomFigures() {
       .on('touchmove', onDragMove)
       .on('touchend', onDragEnd)
       .on('touchendoutside', onDragEnd);
-    app.stage.addChild(figures[i]);
+    container.addChild(figures[i]);
     figuresAmount++;
   }
 }
 
-function createTargets() {
+function createTargets(container) {
   const triangle = createTriangle(targetTrianglePath, 0xffffff);
-  app.stage.addChild(triangle);
+  container.addChild(triangle);
   const circle = createCircle(...targetCircleSizes, 0xffffff);
-  app.stage.addChild(circle);
+  container.addChild(circle);
   const square = createSquare(...targetSquareSizes, 0xffffff);
-  app.stage.addChild(square);
+  container.addChild(square);
 }
 
 function createSquare(x, y, s, color) {
