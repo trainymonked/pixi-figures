@@ -1,5 +1,3 @@
-const Loader = PIXI.Loader.shared;
-
 PIXI.utils.skipHello();
 const app = new PIXI.Application({
   width: 800,
@@ -13,11 +11,10 @@ const app = new PIXI.Application({
   let scrW = dvW, scrH = dvH;
   if (dvW >= app.view.width && dvH >= app.view.height) {
     return;
-  }
-  if (dvH/dvW < app.view.height/app.view.width) {
-    scrW = (scrH*app.view.width)/app.view.height;
+  } else if (dvH / dvW < app.view.height / app.view.width) {
+    scrW = (scrH * app.view.width) / app.view.height;
   } else {
-    scrH = (scrW*app.view.height)/app.view.width;
+    scrH = (scrW * app.view.height) / app.view.width;
   }
   app.renderer.resize(scrW, scrH);
 })();
@@ -25,32 +22,34 @@ const app = new PIXI.Application({
 document.getElementById('figures').appendChild(app.view);
 
 const { width, height } = app.view, rad = height / 10;
-const targetCircleSizes = [width/2, height - rad - 20, rad];
-const targetSquareSizes = [width - width/5 - rad, height - rad*2 - 20, rad*2];
+const targetCircleSizes = [width / 2, height - rad - 20, rad];
+const targetSquareSizes = [
+  width - width / 5 - rad,
+  height - rad * 2 - 20,
+  rad * 2
+];
 const targetTrianglePath = [
-  width/5 + (rad*2)/Math.sqrt(3), height - 20,
-  width/5 - (rad*2)/Math.sqrt(3), height - 20,
-  width/5, height - 20 - rad*2
+  width / 5 + (rad * 2) / Math.sqrt(3), height - 20,
+  width / 5 - (rad * 2) / Math.sqrt(3), height - 20,
+  width / 5, height - 20 - rad * 2
 ];
 let figuresAmount = 0;
 
-Loader.load(() => {
-  const container = new PIXI.Container();
-  createTargets(container);
-  createRandomFigures(container);
-  app.stage.addChild(container);
+const container = new PIXI.Container();
+createTargets();
+createRandomFigures();
+app.stage.addChild(container);
 
-  const border = new PIXI.Graphics();
-  border.lineStyle(2, 0x000000);
-  border.drawPolygon([0, 0, width, 0, width, height, 0, height]);
-  app.stage.addChild(border);
+const border = new PIXI.Graphics();
+border.lineStyle(2, 0x000000);
+border.drawPolygon([0, 0, width, 0, width, height, 0, height]);
+app.stage.addChild(border);
 
-  const line = new PIXI.Graphics();
-  line.lineStyle(1, 0x000000);
-  line.moveTo(0, height - rad*3);
-  line.lineTo(width, height - rad*3);
-  app.stage.addChild(line);
-});
+const line = new PIXI.Graphics();
+line.lineStyle(1, 0x000000);
+line.moveTo(0, height - rad * 3);
+line.lineTo(width, height - rad * 3);
+app.stage.addChild(line);
 
 function onDrag(event) {
   this.alpha = 0.5;
@@ -113,18 +112,18 @@ function onDragMove() {
 function gameOver() {
   const text = new PIXI.Text('GAME OVER', {
     fontFamily: 'Impact',
-    fontSize: rad*2,
+    fontSize: rad * 2,
     fill: 0xffffff,
     stroke: 0x000000,
     strokeThickness: 3,
     align: 'center'
   });
-  text.pivot.set(text.width/2, text.height/2);
-  text.position.set(width/2, height/2 - rad);
+  text.pivot.set(text.width / 2, text.height / 2);
+  text.position.set(width / 2, height / 2 - rad);
   app.stage.addChild(text);
 }
 
-function createRandomFigures(container) {
+function createRandomFigures() {
   const figures = [];
   for (let i = 0, max = getRandom(4, 10); i < max; i++) {
     const figureType = getRandom(0, 2);
@@ -151,7 +150,7 @@ function createRandomFigures(container) {
   }
 }
 
-function createTargets(container) {
+function createTargets() {
   const triangle = createTriangle(targetTrianglePath, 0xffffff);
   container.addChild(triangle);
   const circle = createCircle(...targetCircleSizes, 0xffffff);
@@ -170,13 +169,13 @@ function createSquare(x, y, s, color) {
 }
 
 function createRandomSquare() {
-  const s = getRandom(rad/1.5, rad*2.5);
-  const x = getRandom(s/1.5, width - s/1.5);
-  const y = getRandom(s/1.5, height - rad*3 - s/1.5);
+  const s = getRandom(rad / 1.5, rad * 2.5);
+  const x = getRandom(s / 1.5, width - s / 1.5);
+  const y = getRandom(s / 1.5, height - rad * 3 - s / 1.5);
   const gr = createSquare(x, y, s, getRandom(0, 0xffffff));
-  gr.pivot.set(x + s/2, y + s/2);
+  gr.pivot.set(x + s / 2, y + s / 2);
   gr.position.set(x, y);
-  gr.rotation = getRandom(0, 360)/360;
+  gr.rotation = getRandom(0, 360) / 360;
   gr.figureType = 'square';
   return gr;
 }
@@ -191,9 +190,9 @@ function createCircle(x, y, r, color) {
 }
 
 function createRandomCircle() {
-  const r = getRandom(rad/2, rad*1.25);
+  const r = getRandom(rad / 2, rad * 1.25);
   const x = getRandom(r, width - r);
-  const y = getRandom(r, height - rad*3 - r);
+  const y = getRandom(r, height - rad * 3 - r);
   const gr = createCircle(x, y, r, getRandom(0, 0xffffff));
   gr.pivot.set(x, y);
   gr.position.set(x, y);
@@ -213,18 +212,18 @@ function createTriangle(path, color) {
 function createRandomTriangle() {
   const path = [
     rad, rad,
-    getRandom(rad*2, rad*3.5), rad,
-    getRandom(rad*2, rad*3.5), getRandom(rad*2, rad*3.5)
+    getRandom(rad * 2, rad * 3.5), rad,
+    getRandom(rad * 2, rad * 3.5), getRandom(rad * 2, rad * 3.5)
   ];
   const gr = createTriangle(path, getRandom(0, 0xffffff));
   const maxX = Math.max(path[0], path[2], path[4]);
   const maxY = Math.max(path[1], path[3], path[5]);
-  gr.pivot.set(maxX/2, maxY/2);
+  gr.pivot.set(maxX / 2, maxY / 2);
   gr.position.set(
-    getRandom(rad/2, width - rad*1.7),
-    getRandom(rad, height - rad*2.5 - maxY)
+    getRandom(rad / 2, width - rad * 1.7),
+    getRandom(rad, height - rad * 2.5 - maxY)
   );
-  gr.rotation = getRandom(0, 360)/360;
+  gr.rotation = getRandom(0, 360) / 360;
   gr.figureType = 'triangle';
   return gr;
 }
