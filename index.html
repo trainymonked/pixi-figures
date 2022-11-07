@@ -5,10 +5,34 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PixiJS Figures</title>
+  <style>
+    .cr {
+      width: 600px;
+      background-color: #ffffff;
+      margin: -3% 0 0;
+      border-radius: 0 0 3px 3px;
+    }
+    .cr-text {
+      padding: 8px;
+      color: #000000;
+    }
+    .cr-link {
+      color: #000000;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .cr-link:hover {
+      text-decoration: underline;
+      font-style: italic;
+    }
+  </style>
 </head>
 
 <body>
   <div id="figures"></div>
+  <div class="cr">
+      <p class="cr-text">© 2022, СДЕЛАНО С <img src="img/love.png" alt="ЛЮБОВЬЮ"> ДЛЯ ПОРТФОЛИО <a class="cr-link" target="_blank" href="../">trainymonked.github.io</a></p>
+    </div>
   <script src="pixi.min.js"></script>
   <script src="main.js"></script>
 </body>
