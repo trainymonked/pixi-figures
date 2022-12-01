@@ -1,9 +1,9 @@
 PIXI.utils.skipHello();
 const app = new PIXI.Application({
-  width: 800,
+  width: 1000,
   height: 600,
   antialias: true,
-  backgroundColor: 0xeeddaa
+  backgroundColor: 0xeeaaaa
 });
 
 (() => {
@@ -21,17 +21,19 @@ const app = new PIXI.Application({
 
 document.getElementById('figures').appendChild(app.view);
 
-const { width, height } = app.view, rad = height / 10;
-const targetCircleSizes = [width / 2, height - rad - 20, rad];
+const width = app.view.width - 200;
+const height = app.view.height;
+const rad = height / 10 < width / 10 ? height / 10 : width / 10;
+const targetCircleSizes = [width / 2, height - rad - 15, rad];
 const targetSquareSizes = [
   width - width / 5 - rad,
-  height - rad * 2 - 20,
+  height - rad * 2 - 15,
   rad * 2
 ];
 const targetTrianglePath = [
-  width / 5 + (rad * 2) / Math.sqrt(3), height - 20,
-  width / 5 - (rad * 2) / Math.sqrt(3), height - 20,
-  width / 5, height - 20 - rad * 2
+  width / 5 + (rad * 2) / Math.sqrt(3), height - 15,
+  width / 5 - (rad * 2) / Math.sqrt(3), height - 15,
+  width / 5, height - 15 - rad * 2
 ];
 let figuresAmount = 0;
 
@@ -47,9 +49,11 @@ app.stage.addChild(border);
 
 const line = new PIXI.Graphics();
 line.lineStyle(1, 0x000000);
-line.moveTo(0, height - rad * 3);
-line.lineTo(width, height - rad * 3);
+line.moveTo(0, height - rad * 2 - 25);
+line.lineTo(width, height - rad * 2 - 25);
 app.stage.addChild(line);
+
+createButtons();
 
 function onDrag(event) {
   this.alpha = 0.5;
@@ -108,11 +112,11 @@ function onDragMove() {
     this.position.y = y;
   }
 }
-
+let text;
 function gameOver() {
-  const text = new PIXI.Text('GAME OVER', {
+  text = new PIXI.Text('GAME OVER', {
     fontFamily: 'Impact',
-    fontSize: rad * 2,
+    fontSize: rad,
     fill: 0xffffff,
     stroke: 0x000000,
     strokeThickness: 3,
@@ -121,6 +125,45 @@ function gameOver() {
   text.pivot.set(text.width / 2, text.height / 2);
   text.position.set(width / 2, height / 2 - rad);
   app.stage.addChild(text);
+}
+
+function createButtons() {
+  const bg = new PIXI.Graphics();
+  bg.beginFill(0xffffff);
+  bg.drawRect(width, 0, 250, height);
+  bg.endFill();
+  container.addChild(bg);
+
+  const restart = new PIXI.Graphics();
+  restart.interactive = true;
+  restart.cursor = 'pointer';
+  restart.on('pointerdown', () => location.reload());
+  restart.lineStyle(3, 0, 1);
+  restart.beginFill(0xffffff);
+  restart.drawRoundedRect(width + 15, height / 2 - 45, 170, 40, 15);
+  restart.endFill();
+  container.addChild(restart);
+  const rsText = new PIXI.Text('Restart Game', { fontSize: 20 });
+  rsText.x = width + 35;
+  rsText.y = height / 2 - 37;
+  container.addChild(rsText);
+
+  const addMore = new PIXI.Graphics();
+  addMore.interactive = true;
+  addMore.cursor = 'pointer';
+  addMore.on('pointerdown', () => {
+    text?.destroy() && (text = null);
+    createRandomFigures();
+  });
+  addMore.lineStyle(3, 0, 1);
+  addMore.beginFill(0xffffff);
+  addMore.drawRoundedRect(width + 15, height / 2 + 15, 170, 40, 15);
+  addMore.endFill();
+  container.addChild(addMore);
+  const addMoreText = new PIXI.Text('Create More ', { fontSize: 20 });
+  addMoreText.x = width + 40;
+  addMoreText.y = height / 2 + 23;
+  container.addChild(addMoreText);
 }
 
 function createRandomFigures() {

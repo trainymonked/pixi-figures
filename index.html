@@ -6,8 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PixiJS Figures</title>
   <style>
+    body {
+      text-align: center;
+      user-select: none;
+    }
     .cr {
-      width: 600px;
+      min-width: 350px;
+      max-width: calc(100% - 200px);
       background-color: #ffffff;
       border-radius: 0 0 3px 3px;
     }
@@ -30,9 +35,9 @@
 
 <body>
   <div id="figures"></div>
-    <div class="cr">
-      <p class="cr-text">© 2022, MADE WITH <img src="love.png" alt="LOVE"> FOR <a class="cr-link" target="_blank" href="https://trainymonked.github.io">trainymonked.github.io</a></p>
-    </div>
+  <div class="cr">
+    <p class="cr-text">© 2022, MADE WITH <img src="love.png" alt="LOVE"> FOR <a class="cr-link" target="_blank" href="https://trainymonked.github.io">trainymonked.github.io</a></p>
+  </div>
   <script src="pixi.min.js"></script>
   <script src="main.js"></script>
 </body>
