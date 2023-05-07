@@ -2,44 +2,51 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PixiJS Figures</title>
-  <style>
-    body {
-      text-align: center;
-      user-select: none;
-    }
-    .cr {
-      min-width: 350px;
-      max-width: calc(100% - 200px);
-      background-color: #ffffff;
-      border-radius: 0 0 3px 3px;
-    }
-    .cr-text {
-      font-family: 'Roboto', sans-serif;
-      padding: 8px;
-      color: #000000;
-    }
-    .cr-link {
-      color: #000000;
-      font-weight: 700;
-      text-decoration: none;
-    }
-    .cr-link:hover {
-      text-decoration: underline;
-      font-style: italic;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PixiJS Figures</title>
+    <style>
+        body {
+            text-align: center;
+            user-select: none;
+        }
+
+        .cr {
+            min-width: 350px;
+            max-width: calc(100% - 200px);
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 0 0 3px 3px;
+        }
+
+        .cr-text {
+            font-family: 'Roboto', sans-serif;
+            padding: 8px;
+            color: #000000;
+        }
+
+        .cr-link {
+            color: #000000;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .cr-link:hover {
+            text-decoration: underline;
+            font-style: italic;
+        }
+    </style>
 </head>
 
 <body>
-  <div id="figures"></div>
-  <div class="cr">
-    <p class="cr-text">© 2023, MADE WITH <img src="love.png" alt="LOVE"> FOR <a class="cr-link" target="_blank" href="https://trainymonked.github.io">trainymonked.github.io</a></p>
-  </div>
-  <script src="pixi.min.js"></script>
-  <script src="main.js"></script>
+    <div id="figures"></div>
+    <div class="cr">
+        <p class="cr-text">© <span id="year"></span>, MADE WITH <img src="love.png" alt="LOVE"> FOR <a class="cr-link"
+                target="_blank" href="https://trainymonked.github.io">trainymonked.github.io</a>
+        </p>
+    </div>
+    <script defer src="pixi.min.js"></script>
+    <script defer src="main.js"></script>
 </body>
 
 </html>
