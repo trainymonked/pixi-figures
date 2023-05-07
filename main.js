@@ -166,7 +166,10 @@ function createButtons() {
     addMore.interactive = true
     addMore.cursor = 'pointer'
     addMore.on('pointerdown', () => {
-        text?.destroy() && (text = null)
+        if (text) {
+            text.destroy()
+            text = null
+        }
         createRandomFigures()
     })
     addMore.lineStyle(3, 0, 1)
